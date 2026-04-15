@@ -1,10 +1,4 @@
-import prisma from "./lib/prisma";
-
-interface User {
-  id: number;
-  first_name: string;
-  last_name: string;
-}
+import prisma from "../lib/prisma";
 
 export default async function Page() {
   const user = await prisma.user.findMany();
@@ -13,5 +7,5 @@ export default async function Page() {
     <p>
       {user[0].first_name}
     </p>
-  );
+  ); 
 }
