@@ -1,12 +1,9 @@
 
 import { googleLogin } from "@/src/lib/auth/actions";
-// import { useRouter } from "next/router";
 import { Button } from "@/src/components/ui/button";
-import { toast } from "sonner"
 import { FaGoogle } from "react-icons/fa";
 
 export default async function AuthPage() {
-
     return (
         <div className="dark min-h-screen bg-background flex items-center justify-center p-4">
             <div className="w-full max-w-sm space-y-6">
@@ -17,13 +14,13 @@ export default async function AuthPage() {
                 </div>
 
                 <div>
-                    <FaGoogle height={12} width={12}/>
                     <form action={googleLogin}>
                         <Button 
                             type="submit"
                             variant="default" 
                             size="lg" 
-                            className="w-full gap-2 text-white">
+                            className="w-full gap-2 text-black">
+                            <FaGoogle />
                             Continue with Google
                         </Button>
                     </form>
