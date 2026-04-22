@@ -1,21 +1,12 @@
 /*
-*   Next.js server restarts frequently (via Hot Reloading)
-*   without this snippet of code, every restart creates a new Prisma instance
-*   could lead to "Too many connection" errors
+*   avoids creating multiple instances in development (due to hot reloading)
 */
 
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from "../generated/prisma/client";
 
-const prismaClientSignleton = () => {
-    return new PrismaClient();
-}
+const globalForPrisma = globalThis as unknown as { prisma: PrismaClient };
 
-declare global {
-    var prisma: undefined | ReturnType<typeof prismaClientSignleton>
-}
+export const prisma = 
+    globalForPrisma.prisma ?? new PrismaClient();
 
-const prisma = globalThis.prisma ?? prismaClientSignleton();
-
-export default prisma;
-
-if (process.env.NODE_ENV !== 'production') globalThis.prisma = prisma;
+if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma;

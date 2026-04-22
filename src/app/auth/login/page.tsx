@@ -1,31 +1,71 @@
+import { signIn } from "@/src/auth"
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
+import { Label } from "@/components/ui/label"
 
-import { googleLogin } from "@/src/lib/auth/actions";
-import { Button } from "@/src/components/ui/button";
-import { FaGoogle } from "react-icons/fa";
+export default function SignIn() {
+  return (
+    <div className="min-h-screen bg-black flex items-center justify-center px-4">
+      <div className="w-full max-w-sm">
 
-export default async function AuthPage() {
-    return (
-        <div className="dark min-h-screen bg-background flex items-center justify-center p-4">
-            <div className="w-full max-w-sm space-y-6">
-                <div className="space-y-1 text-center">
-                    <h1 className="text-2xl font-semibold tracking-tight text-foreground">
-                        Stonks
-                    </h1>
-                </div>
-
-                <div>
-                    <form action={googleLogin}>
-                        <Button 
-                            type="submit"
-                            variant="default" 
-                            size="lg" 
-                            className="w-full gap-2 text-black">
-                            <FaGoogle />
-                            Continue with Google
-                        </Button>
-                    </form>
-                </div>
-            </div>
+        <div className="mb-8 text-center">
+          <h1 className="text-white text-3xl font-bold tracking-tight">stonks</h1>
+          <p className="text-zinc-500 text-sm mt-1">sign in to your account</p>
         </div>
-    );
+
+        <Card className="bg-black">
+          <CardHeader className="pb-4">
+            <CardTitle className="text-white text-lg">Welcome back</CardTitle>
+            <CardDescription className="text-zinc-400">
+              Enter your credentials to continue
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <form
+              action={async (formData) => {
+                "use server"
+                await signIn("credentials", formData)
+              }}
+              className="space-y-4"
+            >
+              <div className="space-y-2">
+                <Label htmlFor="username" className="text-zinc-300 text-sm">
+                  Username
+                </Label>
+                <Input
+                  id="username"
+                  name="username"
+                  type="username"
+                  placeholder="chickenOnaise"
+                  className="bg-zinc-800 border-zinc-700 text-white placeholder:text-zinc-500 focus-visible:ring-zinc-500"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="passphrase" className="text-zinc-300 text-sm">
+                  Passphrase
+                </Label>
+                <Input
+                  id="passphrase"
+                  name="passphrase"
+                  type="passphrase"
+                  placeholder="••••••••"
+                  className="bg-zinc-800 border-zinc-700 text-white placeholder:text-zinc-500 focus-visible:ring-zinc-500"
+                />
+              </div>
+
+              <Button
+                type="submit"
+                className="w-full bg-white text-black hover:bg-zinc-200 font-medium mt-2"
+              >
+                Sign In
+              </Button>
+            </form>
+          </CardContent>
+        </Card>
+
+      </div>
+    </div>
+  )
 }
